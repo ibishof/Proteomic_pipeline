@@ -9,5 +9,5 @@ Weighted correlation network analysis (WGCNA) is used for finding clusters (modu
 GO-elite:
 The objective of GO-elite is to identify a  set of biological Ontology terms or pathways to describe a particular set of genes/proteins. It answeres the basic question who are these proteins and what do they do.
 
-Together this pipeline can inform the researcher what group of proteins are related to disease. What pathways these proteins are.
+Together this pipeline can inform the researcher what group of proteins are related to disease. What pathways these proteins are in.
 
