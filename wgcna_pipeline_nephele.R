@@ -16,7 +16,7 @@ options(stringsAsFactors = FALSE);
 setwd("C:\\Users\\bishofij\\Proteomics_Pipeline\\WGCNA\\data_sets")
 proteinGroups <-read.csv("proteinGroups_filtered.csv", row.names = 1)
 
-# Choose a set of soft-thresholding powers
+# The point of this block of code is to choose a set of soft-thresholding powers
 # Change proteinGroups to what ever your table is called
 powers = c(c(1:10), seq(from = 12, to=20, by=2))
 # Call the network topology analysis function
@@ -31,7 +31,7 @@ plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
      main = paste("Scale independence"));
 text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
      labels=powers,cex=cex1,col="red");
-# this line corresponds to using an R^2 cut-off of h
+# This line corresponds to using an R^2 cut-off of h
 abline(h=0.90,col="red")
 # Mean connectivity as a function of the soft-thresholding power
 plot(sft$fitIndices[,1], sft$fitIndices[,5],
@@ -43,12 +43,13 @@ text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 
 ###BlockwiseModule function
 #netwrok type = signed keeps anti correlate things from being in the same module only time to change is if looking at signaling networks. Things going down and up could be related to a singaling pathway
-# Deepslit the higher the number the more modules.
+#Deepslit the higher the number the more modules.
 #Pam stageing allows lower corrlated stuff that is still connected on the dentro to be placed in a module (less Gray)
+#minModuleSize should be no more than 10% of rows/observations
 net <- blockwiseModules(t(proteinGroups),power=8,
                         mergeCutHeight=0.2, #detectCutHeight=0.9999, 
                         corType="bicor",networkType="signed",pamStage= TRUE,
-                        pamRespectsDendro=FALSE, #if pamStage is true keep this false
+                        pamRespectsDendro=TRUE, 
                         deepSplit = 2,
                         TOMDenom = "mean",
                         verbose=3,saveTOMs=FALSE,
@@ -68,6 +69,7 @@ plotDendroAndColors(net$dendrograms[[1]], mergedColors[net$blockGenes[[1]]],
 
 
 # Relating modules to external clinical traits from tutorial
+#Trait data has to be provided
 traitData = read.csv("traits_IP.csv", row.names = 1)
 nGenes = ncol(proteinGroups);
 nSamples = nrow(proteinGroups);
@@ -120,6 +122,7 @@ MEs = t(MEList$eigengene)
 
 toplot <- as.matrix(MEs)
 
+#The grouping is the experminet groups such as Control and Disease
 grouping <- as.data.frame(t(read.csv("group_IP.csv")))
 
 Group <- as.factor(grouping$V1)
