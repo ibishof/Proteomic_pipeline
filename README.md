@@ -1,5 +1,5 @@
 # Proteomic_pipeline
-R scripts for analysis proteomic data
+R scripts for proteomic data analysis
 
 The depostory contains two scripts one being WGCNA and the other being GO-elite
 
