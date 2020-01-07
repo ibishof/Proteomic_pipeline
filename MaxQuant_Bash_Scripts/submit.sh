@@ -8,7 +8,7 @@
 #$ -V
 #$ -S /bin/sh
 #$ -o Result/
-#$ -pe threaded 3
+#$ -pe threaded 12
 
 # Send mail when the job is submitted, and when the job completes
 #$ -m abe
